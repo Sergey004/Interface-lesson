@@ -11,25 +11,38 @@ namespace Interface_lesson
                      
         static void Main(string[] args)
         {
-            Student student1 = new Student() { Name = "Василий", Age = 20 };
-            Student student2 = new Student() { Name = "Наталья", Age = 20 };
+            TestClass test = new TestClass();
 
-            Student[] students = new Student[] { student1, student2 };
+            Console.WriteLine(test.GetMemu());
+            IWindow window = test;
+            Console.WriteLine(window.GetMemu());
+            IRestatuant restatuant = test;
+            Console.WriteLine(restatuant.GetMemu());
+            Console.ReadLine();
 
-            Array.Sort(students);
         }
-        public struct Student: IComparable
+
+        public interface IRestatuant
         {
-            public string Name { get; set; }
-            public int Age { get; set; }
-            public int CompareTo(object obj)
+            object GetMemu();
+        }
+        public interface IWindow
+        {
+            object GetMemu();
+        }
+        public class TestClass : IWindow, IRestatuant
+        {
+            public object GetMemu()
             {
-                Student student = (Student)obj;
-                if (this.Age > student.Age) return 1;
-                if (this.Age > student.Age) return -1;
-                return 0;
-
-
+                return "Собственный метод getMenu";
+            }
+            object IWindow.GetMemu()
+            {
+                return "GetMenu интерфейса IWinodw";
+            }
+            object IRestatuant.GetMemu()
+            {
+                return "GetMenu интерфейса IRestatuant";
             }
         }
     }
